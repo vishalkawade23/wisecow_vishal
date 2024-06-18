@@ -1,0 +1,24 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to container registry
+      uses: docker/login-action@v2
+      with:
+        username: <your_registry_username>
+        password: <your_registry_password>
+    - name: Build and push Docker image
+      run: |
+        docker build -t <your_container_registry>/wisecow:<image_tag> .
+        docker push <your_container_registry>/wisecow:<image_tag>
+    - name: Deploy to Kubernetes (**Challenge Goal**):  # Uncomment for deployment
+      # ... (script to deploy updated image to Kubernetes cluster)
+
+
